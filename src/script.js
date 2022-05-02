@@ -20,9 +20,12 @@ const geometry = new THREE.TorusGeometry( .7, .2, 16, 100 );
 const material = new THREE.MeshBasicMaterial()
 material.color = new THREE.Color(0xff0000)
 
+
 // Mesh
 const sphere = new THREE.Mesh(geometry,material)
 scene.add(sphere)
+
+
 
 // Lights
 
