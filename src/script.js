@@ -3,9 +3,15 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
 
+//høydegrader og breddegrader
+let lat = 60
+let long = 30
+
+let x1 = 0
+
 // Debug
 const gui = new dat.GUI()
-
+let model = null;
 //loader
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
@@ -26,17 +32,19 @@ const geometry = new THREE.SphereBufferGeometry(.8, 64, 64) //(radius, x-polygon
 const loader = new GLTFLoader();
 
 //matrix
-const m = new THREE.Matrix4();
+const m = new THREE.Matrix4(); 
 
 m.makeScale(0.08, 0.08, 0.08);
 
 loader.load( 'scene.gltf', function ( gltf ) {
-    gltf.scene.applyMatrix4(m)
-    gltf.scene.position.y=0.9
-	scene.add( gltf.scene );
+    model = gltf.scene;
+    
+    model.applyMatrix4(m)
+    model.position.y=0.9
+    scene.add( model );
 
 }, undefined, function ( error ) {
-	console.error( error );
+    console.error( error );
 
 } );
 
@@ -125,7 +133,9 @@ const tick = () =>
     // const elapsedTime = clock.getElapsedTime()
 
     // // Update objects
-    // sphere.rotation.y = -0.6 * elapsedTime
+   
+    
+    
 
     // Update Orbital Controls
     // controls.update()
@@ -138,3 +148,39 @@ const tick = () =>
 }
 
 tick()
+let pos = new THREE.Matrix4();
+
+const asdf = () =>
+{
+
+    const elapsedTime = clock.getElapsedTime()
+
+    // // Update objects
+   
+    //pos.setPosition(0,0,0)
+    if(model != null ){
+        // model.applyMatrix4(pos)
+        // model.updateMatrix()
+        model.position.set(0,x1,0)
+        x1 += 0.1 
+    }
+    
+
+    // Update Orbital Controls
+    // controls.update()
+
+    // Render
+
+    // Call tick again on the next frame
+    // window.requestAnimationFrame(asdf)
+}
+
+
+
+window.qwer=function qwer(){
+    asdf()
+}
+
+window.hello=function hello(){
+    console.log("hello")
+}
