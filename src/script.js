@@ -4,11 +4,29 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
 
 //høydegrader og breddegrader
-let lat = 60
-let long = 30
+let t = 180
+let lat1 = 45
+let lat2 = 118
+let lat = lat1
+let deltalat = (lat2-lat1)/t
+let latrad = lat/360 * 2 * Math.PI
+let long1 = 45
+let long2 = 34
+let long = long1
+let deltalong =(long2-long1)/t
+let longrad = long/360 * 2 * Math.PI
+let radius = 0.9
 
-let x1 = 0
+//regner ut x y z koordinater ved hjelp av lengde og breddegrader
+let x1 = radius * Math.sin(latrad) * Math.cos(longrad)
+let y1 = radius * Math.sin(latrad) * Math.sin(longrad)
+let z1 = radius * Math.cos(latrad)
 
+function xyz(){
+    x1 = radius * Math.sin(latrad) * Math.cos(longrad)
+    y1 = radius * Math.sin(latrad) * Math.sin(longrad)
+    z1 = radius * Math.cos(latrad)
+}
 // Debug
 const gui = new dat.GUI()
 let model = null;
@@ -104,7 +122,7 @@ window.addEventListener('resize', () =>
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, .1, 100) //(fov, aspect-ratio, Camera frustum near plane, Camera frustum far plane)
 camera.position.x = 0
-camera.position.y = .3                      //camera position
+camera.position.y = 0                      //camera position
 camera.position.z = 2
 scene.add(camera)                          //adds to scene
 
@@ -130,11 +148,12 @@ const clock = new THREE.Clock()
 const tick = () =>
 {
 
-    // const elapsedTime = clock.getElapsedTime()
+    const elapsedTime = clock.getElapsedTime()
 
-    // // Update objects
-   
-    
+    // Update objects
+    if(model != null ){
+    // model.rotation.y = 0.6 * elapsedTime
+    }
     
 
     // Update Orbital Controls
@@ -161,8 +180,8 @@ const asdf = () =>
     if(model != null ){
         // model.applyMatrix4(pos)
         // model.updateMatrix()
-        model.position.set(0,x1,0)
-        x1 += 0.1 
+        model.position.set(x1,z1,y1)
+        // model.position.set(1,0,0)
     }
     
 
@@ -172,13 +191,34 @@ const asdf = () =>
     // Render
 
     // Call tick again on the next frame
+
     // window.requestAnimationFrame(asdf)
+}
+let frame = 0
+const animate = () =>
+{
+    // Update objects
+    if(model != null ){
+        model.position.set(x1,z1,y1)
+        lat = lat + deltalat
+        latrad = lat/360 * 2 * Math.PI
+        long = long + deltalong
+        longrad = long/360 * 2 * Math.PI
+        xyz()
+    }
+    frame++
+    // Call tick again on the next frame
+    if (frame <= t) {
+        window.requestAnimationFrame(animate)
+    }
 }
 
 
-
 window.qwer=function qwer(){
-    asdf()
+    animate()
+}
+window.value=function value(){
+
 }
 
 window.hello=function hello(){
