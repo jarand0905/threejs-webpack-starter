@@ -10,9 +10,13 @@
 
     <canvas id="canvascolor" class="webgl"></canvas>
 
-    <button id="btn" onclick="qwer()">uhsoiha</button>
+    <div id="startButton"> <button id="btn" onclick="qwer()">uhsoiha</button></div>
 
-    <input id="latSlider" type="range" min="0" max="254" value="127" class="slider">
+    <div id="slider"> 
+        <input id="latSlider" onchange="slider()" type="range" min="0" max="180" value="90" class="slider">
+        <input id="latSlider" onchange="slider()" type="range" min="0" max="180" value="90" class="slider">
+    
+    </div>
 
     <script src="script.js"></script>
 </body>

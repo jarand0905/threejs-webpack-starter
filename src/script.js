@@ -10,7 +10,7 @@ let lat2 = 118
 let lat = lat1
 let deltalat = (lat2-lat1)/t
 let latrad = lat/360 * 2 * Math.PI
-let long1 = 45
+let long1 = 100
 let long2 = 34
 let long = long1
 let deltalong =(long2-long1)/t
@@ -205,8 +205,9 @@ const animate = () =>
         long = long + deltalong
         longrad = long/360 * 2 * Math.PI
         xyz()
+        frame++
     }
-    frame++
+    
     // Call tick again on the next frame
     if (frame <= t) {
         window.requestAnimationFrame(animate)
@@ -215,8 +216,18 @@ const animate = () =>
 
 
 window.qwer=function qwer(){
+    console.log("hi")
     animate()
 }
+
+window.slider = function slider(){
+    var grader = document.getElementById("latSlider");
+    lat = grader.value
+    latrad = lat/360 * 2 * Math.PI
+    xyz()
+    model.position.set(x1,z1,y1)
+}
+
 window.value=function value(){
 
 }
