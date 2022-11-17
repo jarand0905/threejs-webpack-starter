@@ -59,6 +59,7 @@ loader.load( 'scene.gltf', function ( gltf ) {
     
     model.applyMatrix4(m)
     model.position.y=0.9
+    model.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI)
     scene.add( model );
 
 }, undefined, function ( error ) {
@@ -205,6 +206,9 @@ const animate = () =>
         long = long + deltalong
         longrad = long/360 * 2 * Math.PI
         xyz()
+        model.lookAt(x1,z1,y1)
+        model.rotateOnAxis(new THREE.Vector3(0, 1, 0), -Math.PI/2)
+        model.rotateOnAxis(new THREE.Vector3(1, 0, 0), Math.PI/2)
         frame++
     }
     
