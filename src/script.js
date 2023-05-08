@@ -16,6 +16,8 @@ let long = long1
 let deltalong =(long2-long1)/t
 let longrad = long/360 * 2 * Math.PI
 let radius = 0.9
+let maxradius = 1.5
+let deltaradius = radius/maxradius
 
 //regner ut x y z koordinater ved hjelp av lengde og breddegrader
 let x1 = radius * Math.sin(latrad) * Math.cos(longrad)
@@ -76,7 +78,8 @@ const material = new THREE.MeshStandardMaterial({map:earthTexture}) //standard m
 const sphere = new THREE.Mesh(
     geometry,material)          //combinds sphere with material and texture
     sphere.position.x=0
-    sphere.rotation.y=-49.95
+    sphere.rotation.y=60.95
+    sphere.rotation.x=Math.PI/9
     scene.add(sphere)               //adds globe to scene
 
 // Lights
@@ -207,8 +210,10 @@ const animate = () =>
         longrad = long/360 * 2 * Math.PI
         xyz()
         model.lookAt(x1,z1,y1)
+        camera.lookAt(x1,z1,y1)
         model.rotateOnAxis(new THREE.Vector3(0, 1, 0), -Math.PI/2)
-        model.rotateOnAxis(new THREE.Vector3(1, 0, 0), Math.PI/2)
+        model.rotateOnAxis(new THREE.Vector3(1, 0, 0), ((longrad-Math.PI/2)*-1)*2)
+        //console.log((longrad-Math.PI/2)*-1)*2
         frame++
     }
     
@@ -220,7 +225,10 @@ const animate = () =>
 
 
 window.qwer=function qwer(){
-    console.log("hi")
+    frame = 0
+    lat = lat1
+    long = long1
+    xyz()
     animate()
 }
 
